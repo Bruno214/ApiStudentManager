@@ -36,5 +36,11 @@ public class StudentController {
         Student student = studentService.updateStudent(studentDto, id);
         return new ResponseEntity<>(student.getId(), HttpStatus.OK);
     }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> deletetudent(@PathVariable String id) {
+        studentService.deleteStudent(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
 

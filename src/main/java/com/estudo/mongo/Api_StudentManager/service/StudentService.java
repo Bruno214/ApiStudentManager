@@ -52,4 +52,14 @@ public class StudentService {
     public boolean isEmptyOrNull(String value) {
         return StringUtils.isBlank(value);
     }
+
+    public void deleteStudent(String studentId) {
+        Optional<Student> studentOptional = this.studentRepository.findById(studentId);
+        if (studentOptional.isEmpty()) {
+            throw new RuntimeException("Student não encontrado");
+        }
+
+        Student student = studentOptional.get();
+        this.studentRepository.delete(student);
+    }
 }
