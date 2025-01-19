@@ -27,6 +27,16 @@ public class StudentService {
                 .map(studentConverter::convertStudent).toList();
     }
 
+
+    public StudentResponseVo getStudentById(String studentId) {
+        Optional<Student> student = this.studentRepository.findById(studentId);
+        if (student.isEmpty()) {
+            throw new RuntimeException("estudante não encontrado");
+        }
+
+        return studentConverter.convertStudent(student.get());
+    }
+
     public Student addStudent(StudentRequestDto studentDto) {
         String registration = UUID.randomUUID().toString();
         Student student = new Student(null, studentDto.name(), registration, studentDto.cpf());
@@ -36,7 +46,7 @@ public class StudentService {
     public Student updateStudent(StudentRequestDto studentDto, String studentId ) {
         Optional<Student> studentOptional = this.studentRepository.findById(studentId);
         if (studentOptional.isEmpty()) {
-            throw new RuntimeException("Student não encontrado");
+            throw new RuntimeException("estudante não encontrado");
         }
 
         Student student = studentOptional.get();
